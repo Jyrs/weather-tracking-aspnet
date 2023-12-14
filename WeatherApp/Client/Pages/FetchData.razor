@@ -14,6 +14,11 @@
 }
 else
 {
+    <div>
+        <button class="btn btn-primary" @onclick="AddBtnHandler">Click me</button>
+        <input class="delete_btn" type="button" value="-">
+        <input class="edit_btn" type="button" value="edit">
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -23,7 +28,7 @@ else
                 <th>Summary</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="test">
             @foreach (var forecast in forecasts)
             {
                 <tr>
@@ -33,15 +38,16 @@ else
                     <td>@forecast.Summary</td>
                 </tr>
             }
+            @((MarkupString) row);
         </tbody>
     </table>
 }
 
-@code {
+@*@code {
     private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
     }
-}
+}*@

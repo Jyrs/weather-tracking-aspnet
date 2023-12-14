@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\**" />
+    <Content Remove="Pages\**" />
+    <EmbeddedResource Remove="Pages\**" />
+    <None Remove="Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.15" />
   </ItemGroup>
 

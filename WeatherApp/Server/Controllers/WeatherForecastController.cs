@@ -28,7 +28,19 @@ namespace WeatherApp.Server.Controllers
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
+
             .ToArray();
         }
+
+
+        [Route("Test")]
+        [HttpGet("{a}")]
+        public int Test(int a)
+        {
+            return 2;
+        }
+
+
+
     }
 }
