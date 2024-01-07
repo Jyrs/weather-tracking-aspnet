@@ -8,10 +8,10 @@ Use AppCore as a startup project
 ---
 Projects build queue:
 
-WeatherApp.Shared
-WeatherApp.Client
-Infrastructure
-WeatherApp.AppCore (Server part)
+- WeatherApp.Shared
+- WeatherApp.Client
+- Infrastructure
+- WeatherApp.AppCore (Server part)
 
 ---
 Just in case
