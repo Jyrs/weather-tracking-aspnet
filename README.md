@@ -1,12 +1,12 @@
 Presentation of climate information about the region
 
 ---
-#Info
+Info
 
 Use AppCore as a startup project
 
 ---
-##Projects build queue:
+Projects build queue:
 
 WeatherApp.Shared
 WeatherApp.Client
@@ -14,9 +14,9 @@ Infrastructure
 WeatherApp.AppCore (Server part)
 
 ---
-just in case
+Just in case
 
-##Check the dependencies
+Check the dependencies
 
 ```sh
 dotnet list package
