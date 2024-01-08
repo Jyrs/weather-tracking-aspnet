@@ -1,43 +1,70 @@
-﻿
-.filters-form div * {
-    margin: 2px;
+﻿* {
+    box-sizing: border-box;
 }
-.filters-form div {
-    margin: 5px;
+.wrapper {
+  max-width: 50rem;
+  width: 100%;
+  margin: 0 auto;
 }
-.filters-form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
+.tabs {
+    position: relative;
+    margin: 3rem 0;
+    background: rgba(32, 178, 170, 0.3);
 }
-
-
-.input-weather-form {
-    /*background-color:gainsboro;*/
-    background-color: #fff;
-    border: 1px solid #808080;
-    border-radius: 5px;
-    align-self: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    box-shadow: revert;
+.tabs::before,
+.tabs::after {
+  content: "";
+  display: table;
 }
-.input-weather-form div {
-    margin: 5px;
+.tabs::after {
+  clear: both;
 }
-
-.enabled-input-form {
-    font-size: 20pt;
+.tab {
+  float: left;
 }
-.input-fields {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+.tab-switch {
+  display: none;
+}
+.tab-label {
+    display: block;
+    line-height: 2.75em;
+    height: 3em;
+    padding: 0 1.618em;
+    background: lightseagreen;
+    border-right: 0.125rem solid lightseagreen;
+    color: #fff;
+    cursor: pointer;
+    top: 0;
+    transition: all 0.25s;
+}
+.tab-label:hover {
+    top: -0.25rem;
+    transition: top 0.25s;
+    background: darkturquoise;
+}
+.tab-content {
+  height: 12rem;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  padding: 1.618rem;
+  background: #fff;
+  color: #2c3e50;
+  opacity: 0;
+  transition: all 0.35s;
+}
+.tab-switch:checked + .tab-label {
+    background: rgba(31, 87, 78, 0.4);
+    color: #2c3e50;
+    border-bottom: 0;
+    border-right: 0.125rem solid rgba(32, 178, 170, 0.3);
+    transition: all 0.35s;
+    z-index: 1;
+    text-decoration: underline;
+    top: -0.0625rem;
+}
+.tab-switch:checked + label + .tab-content {
+  z-index: 2;
+  opacity: 1;
+  transition: all 0.35s;
 }

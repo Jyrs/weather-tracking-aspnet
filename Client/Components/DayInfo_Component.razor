@@ -1,0 +1,75 @@
+﻿@using WeatherApp.Shared
+@inject HttpClient Http
+
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <div class="filters-form">
+            <div>
+                <label>Select date</label>
+                <input type="date">
+            </div>
+            <div>
+                <label>Select region</label>
+                <select name="Region">
+                    <option value="computer_engineering">Russia</option>
+                    <option value="slectrical_engineering">Argentina</option>
+                    <option value="mechanical_engineering">UK</option>
+                    <option value="civil_engineering">Ukrain</option>
+                </select>
+            </div>
+            <div>
+                <button class="enabled-input-form" @onclick=Toggle>+</button>
+            </div>
+        </div>
+        @if (!Collapsed)
+        {
+            <WeatherInput_Component />
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forecast in forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    [Parameter]
+    public bool Collapsed { get; set; } = true;
+
+
+    void Toggle()
+    {
+        Collapsed = !Collapsed;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+    }
+
+}

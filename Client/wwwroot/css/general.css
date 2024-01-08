@@ -7,7 +7,7 @@ button {
     border-radius: 5px;
     border: 0px solid;
     background-color: darkturquoise;
-    width: 5vw;
+    width: 7vw;
 }
 button:hover {
     background-color: lightseagreen;
@@ -23,6 +23,10 @@ select {
 }
 select:focus {
     border-color: lightseagreen;
+}
+
+option:hover {
+    background-color: lightseagreen;
 }
 
 
