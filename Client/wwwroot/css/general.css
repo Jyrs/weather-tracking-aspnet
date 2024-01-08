@@ -1,0 +1,39 @@
+﻿h1{
+    margin-bottom: 5%;
+}
+
+
+button {
+    border-radius: 5px;
+    border: 0px solid;
+    background-color: darkturquoise;
+    width: 5vw;
+}
+button:hover {
+    background-color: lightseagreen;
+}
+
+select {
+    border: 0px;
+    border-bottom: 2px solid;
+    border-bottom-color: darkturquoise;
+    padding: 5px;
+    height:25%;
+    
+}
+select:focus {
+    border-color: lightseagreen;
+}
+
+
+input {
+    border: 0px;
+    border-bottom: 2px solid;
+    border-bottom-color: darkturquoise;
+    padding: 5px;
+    margin: 5px;
+    height: 25%;
+}
+input:focus {
+     border-color: lightseagreen;
+}
