@@ -2,7 +2,7 @@
 using WeatherApp.AppCore.DTO;
 using WeatherApp.AppCore.Models;
 
-namespace WeatherApp.Shared.Other.AutoMapperProfiles
+namespace WeatherApp.AppCore.Other.AutoMapperProfiles
 {
     internal class WeatherForecastProfile : Profile
     {

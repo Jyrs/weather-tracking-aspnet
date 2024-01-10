@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\WeatherApp.Client.csproj" />
-    <ProjectReference Include="..\Shared\WeatherApp.Shared.csproj" />
+    <ProjectReference Include="..\Shared\WeatherApp.AppCore.csproj" />
   </ItemGroup>
 
 

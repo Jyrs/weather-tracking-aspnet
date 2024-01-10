@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WeatherApp.Shared;
+using WeatherApp.AppCore.Models;
 
 namespace ToDo.Infrastructure.Data
 {

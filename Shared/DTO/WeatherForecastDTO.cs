@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace WeatherApp.Shared.DTO
+namespace WeatherApp.AppCore.DTO
 {
-    internal class WeatherForecastDTO
+    public class WeatherDTO
     {
 
-        public WeatherForecastDTO() { }
+        public WeatherDTO() { }
     }
 }

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\WeatherApp.Shared.csproj" />
+    <ProjectReference Include="..\Shared\WeatherApp.AppCore.csproj" />
   </ItemGroup>
 
 </Project>
