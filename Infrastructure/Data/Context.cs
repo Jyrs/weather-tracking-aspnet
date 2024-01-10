@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WeatherApp.AppCore.Models;
 
-namespace ToDo.Infrastructure.Data
+namespace WeatherApp.Infrastructure.Data
 {
     public class Context : DbContext
     {
@@ -9,7 +9,10 @@ namespace ToDo.Infrastructure.Data
             : base(options)
         {
         }
-        public DbSet<WeatherForecast> WeatherForecasts { get; set; }
+        public DbSet<ClimatDayInfo> ClimatDayInfo { get; set; }
+        public DbSet<Region> Region { get; set; }
+        public DbSet<CharacteristicType> CharacteristicType { get; set; }
+        public DbSet<CharacteristicsValue> CharacteristicValue { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
