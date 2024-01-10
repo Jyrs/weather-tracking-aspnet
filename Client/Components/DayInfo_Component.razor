@@ -1,8 +1,12 @@
-﻿@using WeatherApp.AppCore.Models;
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+@using WeatherApp.AppCore.Models;
+@using WeatherApp.Client.Components;
+
 @inject HttpClient Http
 
 
-@if (forecasts == null)
+@if (weathers == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -31,7 +35,29 @@ else
         {
             <WeatherInput_Component />
         }
-        <table class="table">
+
+        <Grid @ref="grid"
+          TItem="WeatherForecast"
+          Class="table table-hover table-bordered table-striped"
+          DataProvider="WeatherDataProvider"
+          AllowFiltering="true"
+          Responsive="true">
+
+            <GridColumn TItem="WeatherForecast" HeaderText="Date" PropertyName="Date">
+                @context.Date
+            </GridColumn>
+            <GridColumn TItem="WeatherForecast" HeaderText="TemperatureC" PropertyName="TemperatureC">
+                @context.TemperatureC
+            </GridColumn>
+            <GridColumn TItem="WeatherForecast" HeaderText="TemperatureF" PropertyName="TemperatureF">
+                @context.TemperatureF
+            </GridColumn>
+            <GridColumn TItem="WeatherForecast" HeaderText="Summary" PropertyName="Summary">
+                @context.Summary
+            </GridColumn>
+        </Grid>
+
+    @*     <table class="table">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -51,12 +77,15 @@ else
                     </tr>
                 }
             </tbody>
-        </table>
+        </table> *@
     </div>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    // private WeatherForecast[]? forecasts;
+
+    BlazorBootstrap.Grid<WeatherForecast> grid = default!;
+    private IEnumerable<WeatherForecast> weathers = default!;
 
     [Parameter]
     public bool Collapsed { get; set; } = true;
@@ -66,10 +95,42 @@ else
     {
         Collapsed = !Collapsed;
     }
+    private async Task<GridDataProviderResult<WeatherForecast>> WeatherDataProvider(GridDataProviderRequest<WeatherForecast> request)
+    {
+        // weathers = forecasts.AsEnumerable<WeatherForecast>();
+        return await Task.FromResult(request.ApplyTo(weathers));
+    }
+
+    // private IEnumerable<WeatherForecast> GetEmployees()
+    // {
+    //     return new List<WeatherForecast>
+    //     {
+    //         new Employee4 { Id = 107, Name = "Alice", Designation = "AI Engineer", DOJ = new DateOnly(1998, 11, 17) },
+    //         new Employee4 { Id = null, Name = "Bob", Designation = "Senior DevOps Engineer", DOJ = new DateOnly(1985, 1, 5)},
+    //         new Employee4 { Id = 106, Name = "John", Designation = "Data Engineer", DOJ = new DateOnly(1995, 4, 17) },
+    //         new Employee4 { Id = 104, Name = "Pop", Designation = "Associate Architect", DOJ = new DateOnly(1985, 6, 8) },
+    //         new Employee4 { Id = 105, Name = "Ronald", Designation = "Senior Data Engineer", DOJ = new DateOnly(1991, 8, 23)},
+    //         new Employee4 { Id = 102, Name = "Line", Designation = "Architect", DOJ = new DateOnly(1977, 1, 12)},
+    //         new Employee4 { Id = 101, Name = "Daniel", Designation = "Architect", DOJ = new DateOnly(1977, 1, 12)},
+    //         new Employee4 { Id = 108, Name = "Zayne", Designation = "Data Analyst", DOJ = new DateOnly(1991, 1, 1)},
+    //         new Employee4 { Id = 109, Name = "Isha", Designation = "App Maker", DOJ = null},
+    //         new Employee4 { Id = 110, Name = "Vijay", Designation = null, DOJ = new DateOnly(1990, 7, 1)},
+    //     };
+    // }
+
+    public async Task<IEnumerable<WeatherForecast>> GetWeathersFromJSONAsync()
+    {
+        var options = new JsonSerializerOptions()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNameCaseInsensitive = true
+            };
+       return await Http.GetFromJsonAsync<IEnumerable<WeatherForecast>>("WeatherForecast", options);
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        weathers = await GetWeathersFromJSONAsync();
     }
 
 }

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddBlazorBootstrap();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
