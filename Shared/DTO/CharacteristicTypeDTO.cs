@@ -4,16 +4,10 @@ namespace WeatherApp.AppCore.DTO
 {
     public class CharacteristicTypeDTO
     {
-        public int CharacteristicTypeDTO_ID { get; private set; }
-        public string CharacteristicTypeDTO_Name { get; private set; }
-        public string CharacteristicTypeDTO_UnitOfMessur { get; private set; }
-        public CharacteristicTypeDTO() {
+        public Guid CharacteristicType_ID { get; private set; }
+        public string CharacteristicType_Name { get; private set; } = string.Empty;
+        public string CharacteristicType_UnitOfMessur { get; private set; } = string.Empty;
 
-            CharacteristicTypeDTO_ID = 0;
-            CharacteristicTypeDTO_Name = string.Empty;
-            CharacteristicTypeDTO_UnitOfMessur = string.Empty;
-        
-        }
 
     }
 }

@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherApp.Infrastructure.Data;
+﻿using WeatherApp.Infrastructure.Data;
+using AutoMapper;
 
 namespace WeatherApp.Infrastructure.Repository
 {
-    internal class AbstractRepository
+    public abstract class AbstractRepository<T>
     {
-        private readonly Context _context;
-        public AbstractRepository(Context context) { 
+        protected readonly Context _context;
+        protected readonly IMapper _mapper;
+        public AbstractRepository(Context context, IMapper mapper) { 
             _context = context;
+            _mapper = mapper;
         }
 
+        public abstract Task<List<T>> GetListAsync();
+        //public abstract Task<List<T>> GetListAsync();
+
+        public abstract Task<T> GetInstanceAsync(Guid Id);
 
     }
 }

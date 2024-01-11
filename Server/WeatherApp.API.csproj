@@ -15,10 +15,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.14" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Client\WeatherApp.Client.csproj" />
+    <ProjectReference Include="..\Infrastructure\WeatherApp.Infrastructure.csproj" />
     <ProjectReference Include="..\Shared\WeatherApp.AppCore.csproj" />
   </ItemGroup>
 
