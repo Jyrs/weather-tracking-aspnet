@@ -8,7 +8,7 @@ namespace WeatherApp.Infrastructure.Other.MappingProfile
     {
         public MappingProfile() {
             CreateMap<Region, RegionDTO>().ReverseMap();
-            CreateMap<ClimateDayInfo, ClimatDayInfoDTO>().ReverseMap();
+            CreateMap<ClimateDayInfo, ClimateDayInfoDTO>().ReverseMap();
             CreateMap<CharacteristicsValue, CharacteristicsValueDTO>().ReverseMap();
             CreateMap<CharacteristicType, CharacteristicTypeDTO>().ReverseMap();
         }

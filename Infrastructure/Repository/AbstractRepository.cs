@@ -12,7 +12,7 @@ namespace WeatherApp.Infrastructure.Repository
             _mapper = mapper;
         }
 
-        public abstract Task<List<T>> GetListAsync();
+        public abstract Task<IEnumerable<T>> GetListAsync();
         //public abstract Task<List<T>> GetListAsync();
 
         public abstract Task<T> GetInstanceAsync(Guid Id);

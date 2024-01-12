@@ -6,7 +6,7 @@
 @inject HttpClient Http
 
 
-@if (weathers == null)
+ @if (weathers == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -37,23 +37,20 @@ else
         }
 
         <Grid @ref="grid"
-          TItem="Weather"
+          TItem="ClimateDayInfoDTO"
           Class="table table-hover table-bordered table-striped"
           DataProvider="WeatherDataProvider"
           AllowFiltering="true"
           Responsive="true">
 
-            <GridColumn TItem="Weather" HeaderText="Date" PropertyName="Date">
-                @context.Date
+            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">
+                @context.ClimatDayInfo_ID
             </GridColumn>
-            <GridColumn TItem="Weather" HeaderText="TemperatureC" PropertyName="TemperatureC">
-                @context.TemperatureC
+            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID_Region" PropertyName="RegionID">
+                @context.RegionID
             </GridColumn>
-            <GridColumn TItem="Weather" HeaderText="TemperatureF" PropertyName="TemperatureF">
-                @context.TemperatureF
-            </GridColumn>
-            <GridColumn TItem="Weather" HeaderText="Summary" PropertyName="Summary">
-                @context.Summary
+            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="Date" PropertyName="day_Date">
+                @context.day_Date
             </GridColumn>
         </Grid>
 
@@ -63,8 +60,8 @@ else
 @code {
     // private WeatherForecast[]? forecasts;
 
-    BlazorBootstrap.Grid<Weather> grid = default!;
-    private IEnumerable<Weather> weathers = default!;
+    BlazorBootstrap.Grid<ClimateDayInfoDTO> grid = default!;
+    private IEnumerable<ClimateDayInfoDTO> weathers;
 
     [Parameter]
     public bool Collapsed { get; set; } = true;
@@ -75,24 +72,24 @@ else
         Collapsed = !Collapsed;
     }
 
-    private async Task<GridDataProviderResult<Weather>> WeatherDataProvider(GridDataProviderRequest<Weather> request)
+    private async Task<GridDataProviderResult<ClimateDayInfoDTO>> WeatherDataProvider(GridDataProviderRequest<ClimateDayInfoDTO> request)
     {
         return await Task.FromResult(request.ApplyTo(weathers));
     }
 
-    public async Task<IEnumerable<Weather>> GetWeathersFromJSONAsync()
-    {
-        var options = new JsonSerializerOptions()
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                PropertyNameCaseInsensitive = true
-            };
-       return await Http.GetFromJsonAsync<IEnumerable<Weather>>("WeatherForecast", options);
-    }
+    // public async Task<IEnumerable<Weather>> GetWeathersFromJSONAsync()
+    // {
+    //     var options = new JsonSerializerOptions()
+    //         {
+    //             ReferenceHandler = ReferenceHandler.Preserve,
+    //             PropertyNameCaseInsensitive = true
+    //         };
+    //    return await Http.GetFromJsonAsync<IEnumerable<Weather>>("WeatherForecast", options);
+    // }
 
     protected override async Task OnInitializedAsync()
     {
-        weathers = await GetWeathersFromJSONAsync();
+        weathers = await Http.GetFromJsonAsync<IEnumerable<ClimateDayInfoDTO>>("http://localhost:5141/api/ClimatDayInfo");
     }
 
 }

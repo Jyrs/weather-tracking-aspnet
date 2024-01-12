@@ -3,18 +3,17 @@ using WeatherApp.AppCore.Models;
 
 namespace WeatherApp.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WFController : ControllerBase
+    [Route("wtf/[controller]")]
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-        private readonly ILogger<WFController> _logger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        public WFController(ILogger<WFController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
@@ -30,8 +29,6 @@ namespace WeatherApp.API.Controllers
             })
             .ToArray();
         }
-
-     
 
 
 
