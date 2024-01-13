@@ -12,6 +12,11 @@ namespace WeatherApp.Infrastructure.Repository
         //IMapper _mapper;
         public ClimatDayInfo_Repository(Context context, IMapper mapper) : base(context, mapper) { }
 
+        public override Task AddInstanceAsync(ClimateDayInfoDTO obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public override async Task<ClimateDayInfoDTO> GetInstanceAsync(Guid Id)
         {
             ClimateDayInfo instance = await _context.ClimateDayInfo.FirstOrDefaultAsync(e => e.ClimatDayInfo_ID == Id);
@@ -26,7 +31,7 @@ namespace WeatherApp.Infrastructure.Repository
             return dto;
         }
 
-        public override async Task<IEnumerable<ClimateDayInfoDTO>> GetListAsync()
+        public override async Task<IEnumerable<ClimateDayInfoDTO>> GetIEnumerableAsync()
         {
 
             List<ClimateDayInfo> climates = await _context.ClimateDayInfo.ToListAsync();
@@ -34,6 +39,11 @@ namespace WeatherApp.Infrastructure.Repository
             return dto;
         }
 
-
+        public override async Task<List<ClimateDayInfoDTO>> GetListAsync()
+        {
+            List<ClimateDayInfo> climates = await _context.ClimateDayInfo.ToListAsync();
+            List<ClimateDayInfoDTO> dto = _mapper.Map<List<ClimateDayInfoDTO>>(climates);
+            return dto;
+        }
     }
 }

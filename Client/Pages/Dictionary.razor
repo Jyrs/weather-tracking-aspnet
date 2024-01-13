@@ -10,10 +10,12 @@
 }
 else
 {
+    <Button Type="ButtonType.Button" Color="ButtonColor.Primary" @onclick="AddRegion"> Add Employee </Button>
+
         <Grid @ref="grid"
           TItem="RegionDTO"
           Class="table table-hover table-bordered table-striped"
-          DataProvider="RegionDataProvider"
+          Data="regions"
           AllowFiltering="true"
           Responsive="true">
 

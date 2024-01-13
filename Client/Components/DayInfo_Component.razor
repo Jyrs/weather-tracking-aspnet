@@ -44,15 +44,16 @@ else
             </BodyTemplate>
             <FooterTemplate>
                 <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
-                <Button Color="ButtonColor.Primary" @onclick="AddCharacteristic">Save changes</Button>
+                <Button Color="ButtonColor.Primary" >Save changes</Button>
             </FooterTemplate>
         </Modal>
 
         <Grid @ref="grid"
           TItem="ClimateDayInfoDTO"
           Class="table table-hover table-bordered table-striped"
-          DataProvider="WeatherDataProvider"
+          Data="characts"
           AllowFiltering="true"
+          AllowPaging="true"
           Responsive="true">
 
             <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">

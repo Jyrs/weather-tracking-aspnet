@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WeatherApp.Infrastructure.Data;
 using AutoMapper;
 using WeatherApp.AppCore.DTO;
+using WeatherApp.AppCore.Models;
 
 namespace WeatherApp.API.Controllers
 {
@@ -29,9 +30,20 @@ namespace WeatherApp.API.Controllers
 
         // GET api/ClimatDayInfo/regions_list
         [HttpGet("regions_list")]
-        public async Task<IEnumerable<RegionDTO>> GetRegionList()
+        public async Task<ActionResult<IEnumerable<RegionDTO>>> GetRegionList()
         {
-            return await _region_Repository.GetListAsync();
+            try
+            {
+                var result = await _region_Repository.GetListAsync();
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }        
         }
 
         [HttpGet("climate/{id}")]
@@ -44,6 +56,24 @@ namespace WeatherApp.API.Controllers
         public async Task<RegionDTO> GetInstanceRegions(Guid id)
         {
             return await _region_Repository.GetInstanceAsync(id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<RegionDTO>> PostInstanceRegion([FromBody] RegionDTO region)
+        {
+            try
+            {
+                if (region == null)
+                    return BadRequest();
+                var createdRegion = await _region_Repository.AddInstanceAsync(region);
+                return CreatedAtAction(nameof(GetInstanceRegions),
+                    new { id = createdRegion.Reg_Id}, createdRegion);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error creating new region record");
+            }
         }
 
 

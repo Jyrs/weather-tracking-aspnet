@@ -5,10 +5,11 @@ namespace WeatherApp.AppCore.DTO
 {
     public class RegionDTO : ICloneable
     {
-        public Guid Reg_Id { get; private set; }
-        public string Reg_name { get; private set; } = string.Empty;
-        public int Reg_code { get; private set; }
+        public Guid Reg_Id { get;  set; } = Guid.NewGuid();
+        public string Reg_name { get; set; } = string.Empty;
+        public int Reg_code { get;  set; }
 
+        public RegionDTO() { }
 
         public RegionDTO(Guid Reg_Id, string Reg_name, int Reg_code)
         {
