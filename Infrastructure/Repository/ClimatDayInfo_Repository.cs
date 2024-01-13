@@ -19,12 +19,12 @@ namespace WeatherApp.Infrastructure.Repository
             return dto;
         }
 
-        //public async override Task<ClimatDayInfoDTO> GetInstanceAsync(DateTime date)
-        //{
-        //    ClimatDayInfo? instance = await _context.ClimatDayInfo.FirstOrDefaultAsync(e => e.Day_Date == date);
-        //    ClimatDayInfoDTO dto = _mapper.Map<ClimatDayInfoDTO>(instance);
-        //    return dto;
-        //}
+        public async Task<ClimateDayInfoDTO> GetInstanceAsync(DateTime date)
+        {
+            ClimateDayInfo? instance = await _context.ClimateDayInfo.FirstOrDefaultAsync(e => e.day_date == date);
+            ClimateDayInfoDTO dto = _mapper.Map<ClimateDayInfoDTO>(instance);
+            return dto;
+        }
 
         public override async Task<IEnumerable<ClimateDayInfoDTO>> GetListAsync()
         {

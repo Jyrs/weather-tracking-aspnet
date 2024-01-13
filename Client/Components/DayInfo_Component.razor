@@ -6,7 +6,7 @@
 @inject HttpClient Http
 
 
- @if (weathers == null)
+ @if (characts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -21,20 +21,32 @@ else
             <div>
                 <label>Select region</label>
                 <select name="Region">
-                    <option value="computer_engineering">Russia</option>
-                    <option value="slectrical_engineering">Argentina</option>
-                    <option value="mechanical_engineering">UK</option>
-                    <option value="civil_engineering">Ukrain</option>
+                    @foreach(var reg in regions)
+                    {
+                        <option value="@reg.Reg_code"> @reg.Reg_name </option>
+                    }
                 </select>
             </div>
             <div>
-                <button class="enabled-input-form" @onclick=Toggle>+</button>
+                <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Vertically centered modal</Button>
+                @* <button class="enabled-input-form" @onclick=Toggle>+</button> *@
             </div>
         </div>
-        @if (!Collapsed)
+
+        @*@if (!Collapsed)
         {
-            <WeatherInput_Component />
-        }
+           <WeatherInput_Component />
+        } *@
+
+        <Modal @ref="modal" title="Add new characteristic" IsVerticallyCentered="true">
+            <BodyTemplate>
+                <WeatherInput_Component />
+            </BodyTemplate>
+            <FooterTemplate>
+                <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
+                <Button Color="ButtonColor.Primary" @onclick="AddCharacteristic">Save changes</Button>
+            </FooterTemplate>
+        </Modal>
 
         <Grid @ref="grid"
           TItem="ClimateDayInfoDTO"
@@ -55,41 +67,4 @@ else
         </Grid>
 
     </div>
-}
-
-@code {
-    // private WeatherForecast[]? forecasts;
-
-    BlazorBootstrap.Grid<ClimateDayInfoDTO> grid = default!;
-    private IEnumerable<ClimateDayInfoDTO> weathers;
-
-    [Parameter]
-    public bool Collapsed { get; set; } = true;
-
-
-    void Toggle()
-    {
-        Collapsed = !Collapsed;
-    }
-
-    private async Task<GridDataProviderResult<ClimateDayInfoDTO>> WeatherDataProvider(GridDataProviderRequest<ClimateDayInfoDTO> request)
-    {
-        return await Task.FromResult(request.ApplyTo(weathers));
-    }
-
-    // public async Task<IEnumerable<Weather>> GetWeathersFromJSONAsync()
-    // {
-    //     var options = new JsonSerializerOptions()
-    //         {
-    //             ReferenceHandler = ReferenceHandler.Preserve,
-    //             PropertyNameCaseInsensitive = true
-    //         };
-    //    return await Http.GetFromJsonAsync<IEnumerable<Weather>>("WeatherForecast", options);
-    // }
-
-    protected override async Task OnInitializedAsync()
-    {
-        weathers = await Http.GetFromJsonAsync<IEnumerable<ClimateDayInfoDTO>>("http://localhost:5141/api/ClimatDayInfo");
-    }
-
 }

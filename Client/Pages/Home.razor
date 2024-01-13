@@ -6,20 +6,19 @@
 
 <h1>Weather everyDay!🌦️🌤️🌧️ </h1>
 
-<div class="wrapper">
-  <div class="tabs">
-    <div class="tab">
-      <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-      <label for="tab-1" class="tab-label">DayInfo</label>
-      <div class="tab-content"> <DayInfo_Component /> </div>
-    </div>
-    <div class="tab">
-      <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
-      <label for="tab-2" class="tab-label">PeriodInfo</label>
-      <div class="tab-content"> <PeriodInfo_Component /></div>
-    </div>
-   </div>
-</div>
+    <Tabs>
+        <Tab Title="Home" IsActive="true">
+            <Content>
+                    <DayInfo_Component />
+            </Content>
+        </Tab>
+        <Tab Title="Contact">
+            <Content>
+                    <PeriodInfo_Component />
+            </Content>
+        </Tab>
+    </Tabs>
+
 
 
 

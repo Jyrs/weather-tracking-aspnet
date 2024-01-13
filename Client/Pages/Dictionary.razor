@@ -1,0 +1,29 @@
+﻿@page "/dictionary"
+@using WeatherApp.Client.Components
+@inject HttpClient Http
+
+<PageTitle>About</PageTitle>
+
+@if (regions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+        <Grid @ref="grid"
+          TItem="RegionDTO"
+          Class="table table-hover table-bordered table-striped"
+          DataProvider="RegionDataProvider"
+          AllowFiltering="true"
+          Responsive="true">
+
+            <GridColumn TItem="RegionDTO" HeaderText="Name" PropertyName="Reg_name">
+                @context.Reg_name
+            </GridColumn>
+            <GridColumn TItem="RegionDTO" HeaderText="Reg_Code" PropertyName="Reg_code">
+                @context.Reg_code
+            </GridColumn>
+        </Grid>
+}
+
+
