@@ -14,6 +14,7 @@ namespace WeatherApp.Infrastructure.Repository
 
         public abstract Task AddInstanceAsync(T obj);
 
+        public abstract Task<bool> Delete(List<T> obj);
 
         public abstract Task<IEnumerable<T>> GetIEnumerableAsync();
         public abstract Task<List<T>> GetListAsync();

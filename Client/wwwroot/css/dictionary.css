@@ -1,0 +1,31 @@
+﻿.input-weather-form {
+    /*background-color:gainsboro;*/
+    background-color: #fff;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: revert;
+    margin: 10px 0px 10px 0px;
+}
+
+.input-weather-form div {
+    margin: 5px;
+}
+
+.enabled-input-form {
+    font-size: 20pt;
+}
+
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+}

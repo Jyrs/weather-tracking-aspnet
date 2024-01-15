@@ -20,51 +20,34 @@ else
             </div>
             <div>
                 <label>Select region</label>
-                <select name="Region">
-                    @foreach(var reg in regions)
-                    {
-                        <option value="@reg.Reg_code"> @reg.Reg_name </option>
-                    }
-                </select>
-            </div>
-            <div>
-                <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Vertically centered modal</Button>
-                @* <button class="enabled-input-form" @onclick=Toggle>+</button> *@
+                <AutoComplete @bind-Value="region"
+                              TItem="RegionDTO"
+                              DataProvider="RegionsDataProvider"
+                              PropertyName="Reg_name"
+                              Placeholder="Search a Region..."
+                              OnChanged="(RegionDTO region) => OnAutoCompleteChanged(region)" />
             </div>
         </div>
-
-        @*@if (!Collapsed)
-        {
-           <WeatherInput_Component />
-        } *@
-
-        <Modal @ref="modal" title="Add new characteristic" IsVerticallyCentered="true">
-            <BodyTemplate>
-                <WeatherInput_Component />
-            </BodyTemplate>
-            <FooterTemplate>
-                <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
-                <Button Color="ButtonColor.Primary" >Save changes</Button>
-            </FooterTemplate>
-        </Modal>
 
         <Grid @ref="grid"
           TItem="ClimateDayInfoDTO"
           Class="table table-hover table-bordered table-striped"
           Data="characts"
           AllowFiltering="true"
+          EmptyText="No records to display"
           AllowPaging="true"
           Responsive="true">
 
-            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">
-                @context.ClimatDayInfo_ID
-            </GridColumn>
-            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID_Region" PropertyName="RegionID">
-                @context.RegionID
-            </GridColumn>
-            <GridColumn TItem="ClimateDayInfoDTO" HeaderText="Date" PropertyName="day_Date">
-                @context.day_Date
-            </GridColumn>
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">
+            @context.ClimatDayInfo_ID
+         </GridColumn>
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID_Region" PropertyName="RegionID">
+            @context.RegionID
+         </GridColumn>
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="Date" PropertyName="day_Date">
+            @context.day_Date
+         </GridColumn>
+
         </Grid>
 
     </div>

@@ -10,26 +10,26 @@ namespace WeatherApp.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClimatDayInfoController : ControllerBase
+    public class APIController : ControllerBase
     {
         private readonly ClimatDayInfo_Repository _climatDayInfo_Repository;
         private readonly Region_Repository _region_Repository;
 
-        public ClimatDayInfoController(Context context, IMapper mapper)
+        public APIController(Context context, IMapper mapper)
         {
             _climatDayInfo_Repository = new ClimatDayInfo_Repository(context, mapper);
             _region_Repository = new Region_Repository(context, mapper);
         }
 
-        // GET api/ClimatDayInfo/climate_list
-        [HttpGet("climate_list")]
-        public async Task<IEnumerable<ClimateDayInfoDTO>> GetClimatList()
+        // GET api/API/climate_list
+        [HttpGet("GetClimateList")]
+        public async Task<IEnumerable<ClimateDayInfoDTO>> GetClimateList()
         {
             return await _climatDayInfo_Repository.GetListAsync();
         }
 
-        // GET api/ClimatDayInfo/regions_list
-        [HttpGet("regions_list")]
+        // GET api/API/regions_list
+        [HttpGet("GetRegionsList")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> GetRegionList()
         {
             try
@@ -46,19 +46,19 @@ namespace WeatherApp.API.Controllers
             }        
         }
 
-        [HttpGet("climate/{id}")]
+        [HttpGet("GetClimate/{id}")]
         public async Task<ClimateDayInfoDTO> GetInstanceClimat(Guid id)
         {
             return await _climatDayInfo_Repository.GetInstanceAsync(id);
         }
 
-        [HttpGet("region/{id}")]
+        [HttpGet("GetRegion/{id}")]
         public async Task<RegionDTO> GetInstanceRegions(Guid id)
         {
             return await _region_Repository.GetInstanceAsync(id);
         }
 
-        [HttpPost]
+        [HttpPost("PostRegion")]
         public async Task<ActionResult<RegionDTO>> PostInstanceRegion([FromBody] RegionDTO region)
         {
             try
@@ -77,10 +77,21 @@ namespace WeatherApp.API.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<ClimateDayInfoDTO> Delete(Guid id)
+        [HttpDelete("DeleteRegions")]
+        public async Task<ActionResult<IEnumerable<RegionDTO>>> DeleteRegion([FromBody] List<RegionDTO> regions)
         {
-            return await _climatDayInfo_Repository.GetInstanceAsync(id);
+            try
+            {
+                var result = await _region_Repository.Delete(regions);
+                if (result == false)
+                    return NotFound();
+                return Ok(regions);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
 
     }

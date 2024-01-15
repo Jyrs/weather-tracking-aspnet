@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using WeatherApp.AppCore.DTO;
 using WeatherApp.AppCore.Models;
 using WeatherApp.Infrastructure.Data;
@@ -19,7 +20,6 @@ namespace WeatherApp.Infrastructure.Repository
             _context.Region.Add(region);
             await _context.SaveChangesAsync();
             return regDTO;
-
         }
 
         public override async Task<RegionDTO> GetInstanceAsync(Guid Id)
@@ -41,6 +41,22 @@ namespace WeatherApp.Infrastructure.Repository
             List<Region> regions = await _context.Region.ToListAsync();
             List<RegionDTO> dto = _mapper.Map<List<RegionDTO>>(regions);
             return dto;
+        }
+
+        public override async Task<bool> Delete(List<RegionDTO> regionDTOs)
+        {
+            foreach (RegionDTO regionDTO in regionDTOs)
+            {
+                var result = await _context.Region
+                            .FirstOrDefaultAsync(e => e.Reg_Id == regionDTO.Reg_Id);
+                if (result != null)
+                {
+                    _context.Region.Remove(result);
+                    await _context.SaveChangesAsync();
+                }
+                else return false;
+            }
+            return true;
         }
     }
 }

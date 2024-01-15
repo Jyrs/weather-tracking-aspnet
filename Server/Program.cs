@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WeatherApp.Infrastructure.Other.MappingProfile;
 using WeatherApp.Infrastructure.Data;
 using Microsoft.Extensions.Options;
+using WeatherApp.API;
 
 var builder = WebApplication.CreateBuilder(args);
 

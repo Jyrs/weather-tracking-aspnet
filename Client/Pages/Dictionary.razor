@@ -10,22 +10,84 @@
 }
 else
 {
-    <Button Type="ButtonType.Button" Color="ButtonColor.Primary" @onclick="AddRegion"> Add Employee </Button>
+    <Tabs>
+        <Tab Title="Regions" IsActive="true">
+          <Content>
+                <h2>Regions <Icon Name="IconName.PinMapFill" Size="IconSize.x4" /></h2>
+            <hr />
+            <Button style="width: 10%; margin: 0 0 10px 0;" Type="ButtonType.Button" Color="ButtonColor.Primary" @onclick="OnShowModalAddClick"> <Icon Name="IconName.PlusCircle" Size="IconSize.x4" /> </Button>
+                <Button style="width: 10%; margin: 0 0 10px 0;" Disabled="@disableDeleteButton" Type="ButtonType.Button" @onclick="OnShowModalDeleteClick" Color="ButtonColor.Primary"> <Icon Name="IconName.TrashFill" Size="IconSize.x4" /> </Button>
+           
+              <Grid @ref="grid"
+               TItem="RegionDTO"
+               Class="table table-hover table-bordered table-striped"
+               Data="regions"
+               AllowFiltering="true"
+               AllowPaging="true"
+               AllowSelection="true"
+               SelectionMode="GridSelectionMode.Multiple"
+               SelectedItemsChanged="OnSelectedItemsChanged"
+               EmptyText="No records to display"
+               Responsive="true">
 
-        <Grid @ref="grid"
-          TItem="RegionDTO"
-          Class="table table-hover table-bordered table-striped"
-          Data="regions"
-          AllowFiltering="true"
-          Responsive="true">
+               <GridColumn TItem="RegionDTO" HeaderText="Name" PropertyName="Reg_name">
+                   @context.Reg_name
+               </GridColumn>
+               <GridColumn TItem="RegionDTO" HeaderText="Reg_Code" PropertyName="Reg_code">
+                   @context.Reg_code
+               </GridColumn>
+            </Grid>
+                @*  add modal *@
+                <Modal @ref="modalAddRegion" title="Add Region" IsVerticallyCentered="true" OnHidden="OnHideModalAddClick">
+                <BodyTemplate>
+                    <form>
+                        <div class="input-fields">
+                            <div>
+                                <label >Region Name</label>
+                                <input @bind="@newRegion_Input" placeholder="Enter name...">
+                            </div>
+                            <div>
+                                <label >Region Code</label>
+                                <input @bind="@newRegionCode_Input" placeholder="Enter code...">
+                            </div>
+                            <div>
+                                @if (!CollapsedInputError){ <Alert Color ="AlertColor.Danger"> Incorrect data </Alert> }
+                            </div>
+                        </div>
+                    </form>
+                </BodyTemplate>
+                <FooterTemplate>
+                        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalAddClick">Close</Button>
+                    <Button style="width: 25%;"  Color="ButtonColor.Primary" @onclick="AddRegion">Save</Button>
+                </FooterTemplate>
+            </Modal> 
 
-            <GridColumn TItem="RegionDTO" HeaderText="Name" PropertyName="Reg_name">
-                @context.Reg_name
-            </GridColumn>
-            <GridColumn TItem="RegionDTO" HeaderText="Reg_Code" PropertyName="Reg_code">
-                @context.Reg_code
-            </GridColumn>
-        </Grid>
+                @* delete modal *@
+                <Modal @ref="modalDeleteRegion" title="Delete Region" IsVerticallyCentered="true" OnHidden="OnHideModalDeleteClick">
+                    <BodyTemplate>
+                        <form>
+                            <div class="input-fields">
+                                @foreach(var delet in selectedRegions)
+                                {
+                                    <p>@delet.Reg_name</p><br />
+                                }
+                            </div>
+                        </form>
+                    </BodyTemplate>
+                    <FooterTemplate>
+                        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalDeleteClick">Close</Button>
+                        <Button style="width: 25%;" Color="ButtonColor.Primary" @onclick="DeleteRegion">Delete</Button>
+                    </FooterTemplate>
+                </Modal>
+
+        </Content>
+        </Tab>
+        <Tab Title="Characteristics">
+            <Content>
+            </Content>
+         </Tab>
+     </Tabs>
+
 }
 
 

@@ -45,5 +45,10 @@ namespace WeatherApp.Infrastructure.Repository
             List<ClimateDayInfoDTO> dto = _mapper.Map<List<ClimateDayInfoDTO>>(climates);
             return dto;
         }
+
+        public override Task<bool> Delete(List<ClimateDayInfoDTO> obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
