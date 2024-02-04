@@ -7,11 +7,11 @@ namespace WeatherApp.AppCore.DTO
     {
         public Guid Reg_Id { get;  set; } = Guid.NewGuid();
         public string Reg_name { get; set; } = string.Empty;
-        public int Reg_code { get;  set; }
+        public string Reg_code { get; set; } = "";
 
         public RegionDTO() { }
 
-        public RegionDTO(Guid Reg_Id, string Reg_name, int Reg_code)
+        public RegionDTO(Guid Reg_Id, string Reg_name, string Reg_code)
         {
             this.Reg_Id = Reg_Id;
             this.Reg_name = Reg_name;

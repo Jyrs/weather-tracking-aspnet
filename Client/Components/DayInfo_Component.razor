@@ -6,49 +6,46 @@
 @inject HttpClient Http
 
 
- @if (characts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
     <div>
         <div class="filters-form">
             <div>
                 <label>Select date</label>
-                <input type="date">
+                <input @bind-value="selectedDate" type="date" format="yyyy-mm-dd">
             </div>
             <div>
                 <label>Select region</label>
-                <AutoComplete @bind-Value="region"
+            <AutoComplete @bind-Value="selectedRegion"
                               TItem="RegionDTO"
                               DataProvider="RegionsDataProvider"
                               PropertyName="Reg_name"
                               Placeholder="Search a Region..."
                               OnChanged="(RegionDTO region) => OnAutoCompleteChanged(region)" />
             </div>
+            <div>
+                <Button Color="ButtonColor.Primary" @onclick="btn_click" > Search </Button>
+            </div>
         </div>
 
         <Grid @ref="grid"
-          TItem="ClimateDayInfoDTO"
-          Class="table table-hover table-bordered table-striped"
-          Data="characts"
+          TItem="Tuple<string,string,string>"
+          Class="table table-hover table-bordered table-striped grid-btn-hidden"
+          Data="charact"
+          Style="width:50%;"
           AllowFiltering="true"
-          EmptyText="No records to display"
+          EmptyText="Data Empty"
           AllowPaging="true"
           Responsive="true">
 
-         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">
-            @context.ClimatDayInfo_ID
+         <GridColumn TItem="Tuple<string,string,string>" HeaderText="Characts_Name"  Freeze="true">
+             @context.Item1
          </GridColumn>
-         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID_Region" PropertyName="RegionID">
-            @context.RegionID
+         <GridColumn TItem="Tuple<string,string,string>" HeaderText="Value">
+            @context.Item2
          </GridColumn>
-         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="Date" PropertyName="day_Date">
-            @context.day_Date
+         <GridColumn TItem="Tuple<string,string,string>" HeaderText="Measure">
+            @context.Item3
          </GridColumn>
-
         </Grid>
 
     </div>
-}
+

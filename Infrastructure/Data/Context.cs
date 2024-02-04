@@ -9,8 +9,8 @@ namespace WeatherApp.Infrastructure.Data
         { }
         public DbSet<ClimateDayInfo> ClimateDayInfo { get; set; }
         public DbSet<Region> Region { get; set; }
-        //public DbSet<CharacteristicType> CharacteristicType { get; set; }
-        //public DbSet<CharacteristicsValue> CharacteristicValue { get; set; }
+        public DbSet<CharacteristicType> CharacteristicType { get; set; }
+        public DbSet<CharacteristicsValue> CharacteristicsValue { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

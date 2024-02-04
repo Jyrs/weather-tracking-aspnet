@@ -14,6 +14,7 @@ namespace WeatherApp.API.Controllers
     {
         private readonly ClimatDayInfo_Repository _climatDayInfo_Repository;
         private readonly Region_Repository _region_Repository;
+        private readonly CharacteristicsType_Repository _char_type_Repository;
 
         public APIController(Context context, IMapper mapper)
         {
@@ -23,9 +24,21 @@ namespace WeatherApp.API.Controllers
 
         // GET api/API/climate_list
         [HttpGet("GetClimateList")]
-        public async Task<IEnumerable<ClimateDayInfoDTO>> GetClimateList()
+        public async Task<ActionResult<IEnumerable<ClimateDayInfoDTO>>> GetClimateList()
         {
-            return await _climatDayInfo_Repository.GetListAsync();
+            try
+            {
+                var result = await _climatDayInfo_Repository.GetListAsync();
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            
+            }
         }
 
         // GET api/API/regions_list
@@ -47,15 +60,35 @@ namespace WeatherApp.API.Controllers
         }
 
         [HttpGet("GetClimate/{id}")]
-        public async Task<ClimateDayInfoDTO> GetInstanceClimat(Guid id)
+        public async Task<ActionResult<ClimateDayInfoDTO>> GetInstanceClimate(Guid id)
         {
-            return await _climatDayInfo_Repository.GetInstanceAsync(id);
+            try
+            {
+                if (id == null)
+                    return BadRequest();
+                return await _climatDayInfo_Repository.GetInstanceAsync(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error getting Climat instance");
+            }
         }
 
         [HttpGet("GetRegion/{id}")]
-        public async Task<RegionDTO> GetInstanceRegions(Guid id)
+        public async Task<ActionResult<RegionDTO>> GetInstanceRegion(Guid id)
         {
-            return await _region_Repository.GetInstanceAsync(id);
+            try
+            {
+                if (id == null)
+                        return BadRequest();
+                return await _region_Repository.GetInstanceAsync(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error getting Region instance");
+            }
         }
 
         [HttpPost("PostRegion")]
@@ -66,7 +99,7 @@ namespace WeatherApp.API.Controllers
                 if (region == null)
                     return BadRequest();
                 var createdRegion = await _region_Repository.AddInstanceAsync(region);
-                return CreatedAtAction(nameof(GetInstanceRegions),
+                return CreatedAtAction(nameof(GetInstanceRegion),
                     new { id = createdRegion.Reg_Id}, createdRegion);
             }
             catch (Exception)
@@ -76,6 +109,39 @@ namespace WeatherApp.API.Controllers
             }
         }
 
+        [HttpGet("GetCharList")]
+        public async Task<ActionResult<IEnumerable<CharacteristicTypeDTO>>> GetCharList()
+        {
+            try
+            {
+                var result = await _char_type_Repository.GetListAsync();
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet("GetDay/{regName}/{day}")]
+        public async Task<ActionResult<IEnumerable<InfoDisplay>>> GetDay(string regName, DateTime day)
+        {
+            try
+            {
+                var result = await _climatDayInfo_Repository.GetInstanceAsync(regName, day);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
 
         [HttpDelete("DeleteRegions")]
         public async Task<ActionResult<IEnumerable<RegionDTO>>> DeleteRegion([FromBody] List<RegionDTO> regions)

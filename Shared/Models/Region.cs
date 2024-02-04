@@ -10,6 +10,6 @@ namespace WeatherApp.AppCore.Models
         [Key]
         public Guid Reg_Id {  get; private set; } 
         public string Reg_name { get; private set; } = string.Empty;
-        public int Reg_code { get; private set; }
+        public string Reg_code { get; private set; } = "";
     }
 }

@@ -2,7 +2,10 @@
 @inject HttpClient Http
 
 
-@if (forecasts == null)
+@inject HttpClient Http
+
+
+ @if (characts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -11,60 +14,40 @@ else
     <div>
         <div class="filters-form">
             <div>
-                <label>Select period</label>
-                <input type="date">
-                -
+                <label>Select date</label>
                 <input type="date">
             </div>
             <div>
                 <label>Select region</label>
-                <select name="Region">
-                    <option value="computer_engineering">Russia</option>
-                    <option value="slectrical_engineering">Argentina</option>
-                    <option value="mechanical_engineering">UK</option>
-                    <option value="civil_engineering">Ukrain</option>
-                </select>
+                <AutoComplete @bind-Value="region"
+                              TItem="RegionDTO"
+                              DataProvider="RegionsDataProvider"
+                              PropertyName="Reg_name"
+                              Placeholder="Search a Region..."
+                              OnChanged="(RegionDTO region) => OnAutoCompleteChanged(region)" />
             </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var forecast in forecasts)
-                {
-                    <tr>
-                        <td>@forecast.Date.ToShortDateString()</td>
-                        <td>@forecast.TemperatureC</td>
-                        <td>@forecast.TemperatureF</td>
-                        <td>@forecast.Summary</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+        <Grid @ref="grid"
+          TItem="ClimateDayInfoDTO"
+          Class="table table-hover table-bordered table-striped"
+          Data="characts"
+          AllowFiltering="true"
+          EmptyText="No records to display"
+          AllowPaging="true"
+          Responsive="true">
+
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID" PropertyName="ClimatDayInfo_ID">
+            @context.ClimatDayInfo_ID
+         </GridColumn>
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="UUID_Region" PropertyName="RegionID">
+            @context.RegionID
+         </GridColumn>
+         <GridColumn TItem="ClimateDayInfoDTO" HeaderText="Date" PropertyName="day_Date">
+            @context.day_Date
+         </GridColumn>
+
+        </Grid>
+
     </div>
-}
-
-@code {
-    private Weather[]? forecasts;
-
-    [Parameter]
-    public bool Collapsed { get; set; } = true;
-
-
-    void Toggle()
-    {
-        Collapsed = !Collapsed;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await Http.GetFromJsonAsync<Weather[]>("WeatherForecast");
-    }
-
 }

@@ -1,10 +1,14 @@
-﻿namespace WeatherApp.AppCore.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WeatherApp.AppCore.Models
 {
+    [Table("Characteristics_Type")]
     public class CharacteristicType
     {
-        public Guid CharacteristicType_ID { get; private set; }
-        public string CharacteristicType_Name { get; private set; } = string.Empty;
-        public string CharacteristicType_UnitOfMessur { get; private set; } = string.Empty;
+       
+        public Guid ID { get; private set; }
+        public string char_name { get; private set; } = string.Empty;
+        public string char_unitOfMessure { get; private set; } = string.Empty;
 
     }
 }

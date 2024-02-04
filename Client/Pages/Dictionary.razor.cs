@@ -15,7 +15,7 @@ namespace WeatherApp.Client.Pages
         public bool disableDeleteButton {  get; set; } = true;
 
         private static string newRegion_Input { get; set; } = string.Empty;
-        private static int? newRegionCode_Input { get; set; }
+        private static string? newRegionCode_Input { get; set; }
 
         private Grid<RegionDTO> grid = default!;
 
@@ -42,7 +42,7 @@ namespace WeatherApp.Client.Pages
 
         private async Task AddRegion()
         {
-            if(newRegion_Input == String.Empty || newRegionCode_Input == null || newRegionCode_Input == 0)
+            if(newRegion_Input == String.Empty || newRegionCode_Input == null || newRegionCode_Input == "")
             {
                 if(CollapsedInputError) CollapsedInputError = !CollapsedInputError;   
             }
@@ -60,7 +60,7 @@ namespace WeatherApp.Client.Pages
         {
             var reg = new RegionDTO();
             reg.Reg_name = newRegion_Input;
-            reg.Reg_code = (int)newRegionCode_Input;
+            reg.Reg_code = newRegionCode_Input;
             return reg;
         }
 
@@ -102,7 +102,7 @@ namespace WeatherApp.Client.Pages
         private async Task OnHideModalAddClick()
         {
             newRegion_Input = String.Empty;
-            newRegionCode_Input = 0;
+            newRegionCode_Input = "";
             CollapsedInputError = true;
             await modalAddRegion?.HideAsync();
         }

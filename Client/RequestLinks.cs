@@ -6,6 +6,7 @@ struct RequestLinks
        public static string GetRegionsList { get; private set; } = "http://localhost:5141/api/API/GetRegionsList";
        public static string PostRegion { get; private set; } = "http://localhost:5141/api/API/PostRegion";
        public static string DeleteRegion { get; private set; } = "http://localhost:5141/api/API/DeleteRegions";
+    public static string GetListTest { get; private set; } = "http://localhost:5141/api/API/GetDay/";
 
 }
 

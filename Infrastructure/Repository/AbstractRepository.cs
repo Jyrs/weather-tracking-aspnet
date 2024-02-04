@@ -22,5 +22,7 @@ namespace WeatherApp.Infrastructure.Repository
 
         public abstract Task<T> GetInstanceAsync(Guid Id);
 
+
+
     }
 }
